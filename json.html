@@ -1,21 +1,26 @@
 <html>
 <head>
 <title>To-Do List Tasks</title>
-
+</head>
+<body>
+<center><br><h1>Pulling Data from Server (Ajax & JSON) by Neo</h1>
+<button onclick="loadviaAjax()">Import Things to Do</button> <!--Button to trigger Ajax function-->
+<select id='todo'></select> <!--Where data pulled shall be imported-->
 <script>
 //Create object xhhtp
 let xhttp = new XMLHttpRequest();
 let l = document.getElementById('todo');
 //Create doAjax function to perform xhhtp pulling 
-function doAjax(){
+function loadviaAjax(){
 	xhttp.onreadystatechange = function(){
 		l.innerHTML = "List is being loaded..."; //displayed while pulling is going on
 		if (xhttp.readyState==4 && xhttp.status==200)
 		{
 		let data = JSON.parse(xhttp.response); //parsing the String data to JSON data
 		let html = "";
-		for(let i = 0; i<data.length; i++){
-			html+="<option>"+data[i].title+"</option>"; //listing of all the data pulled
+
+		for(let i = 0; i< data.length; i++){
+			html+="<option>"+data[i].title+"Task done:"+data[i].completed+"</option>"; //listing of all the data pulled
 		}
 		l.innerHTML = html; //output to be inserted on html
 	}
@@ -27,12 +32,6 @@ function doAjax(){
 xhttp.open("GET", "https://jsonplaceholder.typicode.com/todos", true); //getting from server url
 xhttp.send(); //sending data pulled
 </script>
-
-</head>
-<body>
-<center><br><h1>Pulling Data from Server (Ajax & JSON) by Neo</h1>
-<button onclick="doAjax()">Import Things to Do</button> <!--Button to trigger Ajax function-->
-<select id="todo"></select> <!--Where data pulled shall be imported-->
 </center>
 </body>
 </html>
